@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Generator - CI/CD Demo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>✨ Quote Generator</h1>
+            <p class="subtitle">CI/CD Pipeline Demonstration Project</p>
+        </header>
+
+        <main>
+            <div class="quote-display" id="quoteDisplay">
+                <p class="quote-text" id="quoteText">Click a button to get an inspiring quote!</p>
+                <p class="quote-author" id="quoteAuthor"></p>
+                <p class="quote-category" id="quoteCategory"></p>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="getRandomQuote()">
+                    🎲 Random Quote
+                </button>
+                <button class="btn btn-success" onclick="getQuoteByCategory('motivational')">
+                    💪 Motivational
+                </button>
+                <button class="btn btn-info" onclick="getQuoteByCategory('wisdom')">
+                    🧠 Wisdom
+                </button>
+                <button class="btn btn-warning" onclick="getQuoteByCategory('humor')">
+                    😄 Humor
+                </button>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-secondary" onclick="addToFavorites()" id="favoriteBtn" disabled>
+                    ⭐ Add to Favorites
+                </button>
+                <button class="btn btn-secondary" onclick="showStats()">
+                    📊 View Stats
+                </button>
+            </div>
+
+            <div class="stats-panel" id="statsPanel" style="display: none;">
+                <h2>📈 Statistics</h2>
+                <div id="statsContent"></div>
+                <button class="btn btn-secondary" onclick="hideStats()">Close</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>Built for DevOps CI/CD Assignment | <a href="/health" target="_blank">Health Check</a></p>
+        </footer>
+    </div>
+
+    <script>
+        let currentQuote = null;
+
+        async function getRandomQuote() {
+            try {
+                const response = await fetch('/api/quote');
+                const quote = await response.json();
+                displayQuote(quote);
+            } catch (error) {
+                showError('Failed to fetch quote');
+            }
+        }
+
+        async function getQuoteByCategory(category) {
+            try {
+                const response = await fetch(`/api/quote/category/${category}`);
+                if (!response.ok) {
+                    throw new Error('Category not found');
+                }
+                const quote = await response.json();
+                displayQuote(quote);
+            } catch (error) {
+                showError('Failed to fetch quote from category');
+            }
+        }
+
+        function displayQuote(quote) {
+            currentQuote = quote;
+            document.getElementById('quoteText').textContent = `"${quote.text}"`;
+            document.getElementById('quoteAuthor').textContent = `— ${quote.author}`;
+            document.getElementById('quoteCategory').textContent = `Category: ${quote.category}`;
+            document.getElementById('favoriteBtn').disabled = false;
+            
+            // Add animation
+            const display = document.getElementById('quoteDisplay');
+            display.style.animation = 'none';
+            setTimeout(() => {
+                display.style.animation = 'fadeIn 0.5s';
+            }, 10);
+        }
+
+        async function addToFavorites() {
+            if (!currentQuote) return;
+            
+            try {
+                const response = await fetch('/api/favorite', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ quote_id: currentQuote.id })
+                });
+                
+                if (response.ok) {
+                    showNotification('Added to favorites! ⭐');
+                } else {
+                    showError('Failed to add to favorites');
+                }
+            } catch (error) {
+                showError('Failed to add to favorites');
+            }
+        }
+
+        async function showStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const stats = await response.json();
+                
+                const favResponse = await fetch('/api/favorites');
+                const favData = await favResponse.json();
+                
+                let statsHtml = `
+                    <div class="stat-item">
+                        <strong>Total Quotes Fetched:</strong> ${stats.total_quotes_fetched}
+                    </div>
+                    <div class="stat-item">
+                        <strong>Unique Categories Used:</strong> ${stats.unique_categories_used}
+                    </div>
+                    <div class="stat-item">
+                        <strong>Most Popular Category:</strong> ${stats.most_popular_category || 'N/A'}
+                    </div>
+                    <div class="stat-item">
+                        <strong>Total Favorites:</strong> ${favData.count}
+                    </div>
+                    <div class="stat-item">
+                        <strong>Categories Accessed:</strong><br>
+                        ${Object.entries(stats.categories_accessed).map(([cat, count]) => 
+                            `${cat}: ${count}`
+                        ).join('<br>') || 'None yet'}
+                    </div>
+                `;
+                
+                document.getElementById('statsContent').innerHTML = statsHtml;
+                document.getElementById('statsPanel').style.display = 'block';
+            } catch (error) {
+                showError('Failed to fetch statistics');
+            }
+        }
+
+        function hideStats() {
+            document.getElementById('statsPanel').style.display = 'none';
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification success';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function showError(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification error';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Load a random quote on page load
+        window.addEventListener('load', getRandomQuote);
+    </script>
+</body>
+</html>
