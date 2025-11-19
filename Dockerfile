@@ -15,11 +15,11 @@ COPY app/ ./app/
 COPY static/ ./static/
 
 # Expose port
-EXPOSE 5000
+EXPOSE 8000
 
 # Set environment variables
 ENV FLASK_APP=app.main
 ENV PYTHONUNBUFFERED=1
 
 # Run the application
-CMD ["python", "-m", "flask", "run", "--host=0.0.0.0", "--port=5000"]
+CMD ["python", "-m", "flask", "run", "--host=0.0.0.0", "--port=8000"]
