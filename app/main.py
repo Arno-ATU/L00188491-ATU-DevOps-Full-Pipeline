@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, send_from_directory
 from .models import QuoteManager
 from .stats import StatsTracker
 
-app = Flask(__name__, static_folder='../static')
+app = Flask(__name__, static_folder='/app/static')
 quote_manager = QuoteManager()
 stats_tracker = StatsTracker()
 
@@ -10,8 +10,7 @@ stats_tracker = StatsTracker()
 @app.route('/')
 def index():
     """Serve the main HTML page"""
-    return send_from_directory('../static', 'index.html')
-
+    return send_from_directory('/app/static', 'index.html')
 
 @app.route('/api/quote', methods=['GET'])
 def get_random_quote():
