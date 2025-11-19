@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, send_from_directory
-from models import QuoteManager
-from stats import StatsTracker
+from .models import QuoteManager
+from .stats import StatsTracker
 
 app = Flask(__name__, static_folder='../static')
 quote_manager = QuoteManager()

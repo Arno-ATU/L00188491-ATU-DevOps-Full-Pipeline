@@ -1,6 +1,6 @@
 import pytest
 import json
-from main import app
+from app.main import app
 
 
 @pytest.fixture
@@ -9,7 +9,7 @@ def client():
     app.config['TESTING'] = True
     with app.test_client() as client:
         # Import here to avoid circular imports
-        from main import stats_tracker
+        from app.main import stats_tracker
         # Reset stats before each test
         stats_tracker.reset_stats()
         yield client
