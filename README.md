@@ -13,9 +13,9 @@ Arno Moelich - L00188491
 
 This project demonstrates a complete CI/CD pipeline for a Python Flask web application. The application itself is a simple quote generator with REST API endpoints, designed to generate user activity for monitoring and observability demonstrations.
 
-**Live Application:** <a href="https://l00188491-web-app-pipeline-h0breuchbbf3hvfm.swedencentral-01.azurewebsites.net/" target="_blank">Query Generator App - Azure Deployment</a>
+**Live Application:** <a href="https://l00188491-web-app-pipeline-h0breuchbbf3hvfm.swedencentral-01.azurewebsites.net/" target="_blank" rel="noopener noreferrer">Query Generator App - Azure Deployment</a>
 
-> **Note:** Chrome may show a security warning. The site is safe - click "Details" → "visit this unsafe site" to proceed. This is due to Azure's default domain not having an SSL certificate.
+> **Note:** Chrome may show a security warning. The site is safe - click "Details" → "visit this unsafe site" to proceed. This warning appears because the app uses Azure's default domain without a custom SSL certificate.
 
 ---
 
