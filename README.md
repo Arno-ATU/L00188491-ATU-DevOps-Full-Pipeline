@@ -6,6 +6,7 @@ Arno Moelich - L00188491
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Arno-ATU_L00188491-ATU-DevOps-Full-Pipeline&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Arno-ATU_L00188491-ATU-DevOps-Full-Pipeline)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Arno-ATU_L00188491-ATU-DevOps-Full-Pipeline&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=Arno-ATU_L00188491-ATU-DevOps-Full-Pipeline)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=Arno-ATU_L00188491-ATU-DevOps-Full-Pipeline&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=Arno-ATU_L00188491-ATU-DevOps-Full-Pipeline)
+
 ---
 
 ## Project Overview
@@ -13,6 +14,22 @@ Arno Moelich - L00188491
 This project demonstrates a complete CI/CD pipeline for a Python Flask web application. The application itself is a simple quote generator with REST API endpoints, designed to generate user activity for monitoring and observability demonstrations.
 
 **Live Application:** [Query Generator App - Azure Deployment](https://l00188491-web-app-pipeline-h0breuchbbf3hvfm.swedencentral-01.azurewebsites.net/)
+
+---
+
+## Key Technologies Used
+
+| Component | Technologies | Status |
+|-----------|-------------|--------|
+| **Application** | Python 3.11, Flask 2.3.3, pytest | ✅ |
+| **Source Code Management** | Git, GitHub | ✅ |
+| **Automated Builds & Testing** | GitHub Actions, pytest, 92% coverage | ✅ |
+| **Static Analysis & Security** | SonarCloud, Trivy, Flake8, Pylint | ✅ |
+| **Containerization** | Docker, Docker Compose | ✅ |
+| **Container Registry** | Docker Hub | ✅ |
+| **Cloud Deployment** | Azure App Service, Linux Containers | ✅ |
+| **Monitoring & Logging** | Azure Application Insights, custom events, alerts | ✅ |
+
 ---
 
 ## CI/CD Pipeline Architecture
@@ -87,15 +104,13 @@ pytest tests/ --cov=app --cov-report=term
 
 ### 4. Containerization
 
-**Technology:** Docker with multi-stage builds
-
+**Technology:** Docker  
 **Container Registry:** Docker Hub  
 **Image:** `arnoatu/cicd-pipeline-demo:latest`
 
 **Dockerfile optimizations:**
 - Python 3.11 slim base image
 - Layer caching for faster builds
-- Security: Non-root user execution
 - `.dockerignore` to minimize image size
 
 **Local development:**
@@ -196,22 +211,6 @@ Secrets are encrypted by GitHub and injected at runtime. Never committed to sour
 
 ---
 
-## Key Technologies
-
-| Category | Technologies |
-|----------|-------------|
-| **Application** | Python 3.11, Flask 2.3.3 |
-| **Testing** | pytest, pytest-cov |
-| **Code Quality** | SonarCloud, Flake8, Pylint |
-| **Security** | Trivy vulnerability scanner |
-| **Containerization** | Docker, Docker Compose |
-| **Registry** | Docker Hub |
-| **CI/CD** | GitHub Actions |
-| **Cloud Platform** | Microsoft Azure (App Service) |
-| **Monitoring** | Azure Application Insights |
-
----
-
 ## Project Structure
 
 ```
@@ -277,19 +276,6 @@ customEvents
 | where timestamp > ago(24h)
 | summarize count() by name
 ```
-
----
-
-## Assignment Requirements Mapping
-
-| Requirement | Implementation | Status |
-|------------|----------------|--------|
-| Source Code Management | Git, GitHub, branching strategy | ✅ Complete |
-| Automated Builds & Testing | GitHub Actions, pytest, 92% coverage | ✅ Complete |
-| Static Analysis & Security | SonarCloud, Trivy, Flake8, Pylint | ✅ Complete |
-| Containerization | Docker, multi-stage builds, Docker Compose | ✅ Complete |
-| Cloud Deployment | Azure App Service, automated deployment | ✅ Complete |
-| Monitoring & Logging | Application Insights, custom events, alerts | ✅ Complete |
 
 ---
 
