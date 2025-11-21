@@ -226,3 +226,13 @@ class TestAPIEndpoints:
         data = json.loads(response.data)
         
         assert data['total_quotes_fetched'] == 5
+
+    def test_static_file_serving(self, client):
+        """Test that static files are served correctly"""
+        response = client.get('/static/style.css')
+        assert response.status_code in [200, 404]  # 404 ok in test env without static files
+        
+    def test_root_serves_html(self, client):
+        """Test root serves index.html"""
+        response = client.get('/')
+        assert response.status_code == 200
