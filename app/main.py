@@ -135,24 +135,20 @@ def get_stats():
 @app.route('/api/favorite', methods=['POST'])
 def add_favorite():
     """Mark a quote as favorite"""
-    try:
-        data = request.get_json()
-        
-        if not data or 'quote_id' not in data:
-            return jsonify({'error': 'quote_id is required'}), 400
-        
-        quote_id = data['quote_id']
-        success = stats_tracker.add_favorite(quote_id)
-        
-        if success:
-            log_event('favorite_added', {'quote_id': quote_id})
-            return jsonify({'message': 'Quote added to favorites', 'quote_id': quote_id})
-        else:
-            log_event('favorite_add_failed', {'quote_id': quote_id})
-            return jsonify({'error': 'Invalid quote_id'}), 400
-    except Exception as e:
-        log_event('favorite_error', {'error': str(e)})
-        return jsonify({'error': 'Failed to add favorite'}), 500
+    data = request.get_json()
+    
+    if not data or 'quote_id' not in data:
+        return jsonify({'error': 'quote_id is required'}), 400
+    
+    quote_id = data['quote_id']
+    success = stats_tracker.add_favorite(quote_id)
+    
+    if success:
+        log_event('favorite_added', {'quote_id': quote_id})
+        return jsonify({'message': 'Quote added to favorites', 'quote_id': quote_id})
+    else:
+        log_event('favorite_add_failed', {'quote_id': quote_id})
+        return jsonify({'error': 'Invalid quote_id'}), 400
 
 
 @app.route('/api/favorites', methods=['GET'])
