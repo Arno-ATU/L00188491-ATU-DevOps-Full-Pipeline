@@ -1,7 +1,6 @@
-Flask==3.0.0
+Flask==2.3.3
 pytest==7.4.3
 pytest-cov==4.1.0
-Werkzeug==3.0.1
-
+Werkzeug==2.3.7
 opencensus-ext-azure==1.1.13
 opencensus-ext-flask==0.8.0
