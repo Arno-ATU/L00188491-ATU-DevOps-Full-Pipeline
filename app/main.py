@@ -1,15 +1,20 @@
 import os
-from flask import Flask, jsonify, request, send_from_directory
+from flask import Flask, jsonify, request
 from .models import QuoteManager
 from .stats import StatsTracker
 
-# Determine static folder path based on environment
+# Create Flask app with explicit static configuration
+# In production (Docker), files are at /app/static
+# In development, files are at ../static relative to app folder
 if os.path.exists('/app/static'):
-    static_folder = '/app/static'
+    app = Flask(__name__, 
+                static_folder='/app/static',
+                static_url_path='/static')
 else:
-    static_folder = '../static'
+    app = Flask(__name__, 
+                static_folder='../static',
+                static_url_path='/static')
 
-app = Flask(__name__, static_folder=static_folder)
 quote_manager = QuoteManager()
 stats_tracker = StatsTracker()
 
@@ -17,10 +22,7 @@ stats_tracker = StatsTracker()
 @app.route('/')
 def index():
     """Serve the main HTML page"""
-    if os.path.exists('/app/static'):
-        return send_from_directory('/app/static', 'index.html')
-    else:
-        return send_from_directory('../static', 'index.html')
+    return app.send_static_file('index.html')
 
 
 @app.route('/api/quote', methods=['GET'])
@@ -83,8 +85,14 @@ def get_favorites():
 @app.route('/health', methods=['GET'])
 def health_check():
     """Health check endpoint for monitoring"""
-    return jsonify({'status': 'healthy', 'service': 'quote-generator'})
+    return jsonify({
+        'status': 'healthy', 
+        'service': 'quote-generator',
+        'static_folder': app.static_folder  # For debugging
+    })
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Only for local development - Azure uses different startup
+    debug_mode = os.getenv('FLASK_ENV', 'production') == 'development'
+    app.run(debug=debug_mode, host='0.0.0.0', port=5000)
