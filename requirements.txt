@@ -4,3 +4,4 @@ pytest-cov==4.1.0
 Werkzeug==2.3.7
 opencensus-ext-azure==1.1.13
 opencensus-ext-flask==0.8.0
+# Updated for Application Insights monitoring

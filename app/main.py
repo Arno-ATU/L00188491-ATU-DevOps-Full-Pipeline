@@ -46,7 +46,7 @@ if connection_string and MONITORING_AVAILABLE:
         """Log custom events to Application Insights"""
         logger.info(name, extra={'custom_dimensions': properties or {}})
     
-    print("✓ Application Insights monitoring enabled")
+    print("Application Insights monitoring enabled")
 else:
     # Fallback logging for local development
     def log_event(name, properties=None):
@@ -54,7 +54,7 @@ else:
         print(f"LOG: {name} - {properties}")
     
     if not connection_string:
-        print("⚠ Application Insights not configured (no connection string)")
+        print("Application Insights not configured (no connection string)")
 
 
 @app.route('/')
