@@ -7,6 +7,7 @@ from .stats import StatsTracker
 # Application Insights monitoring
 try:
     from opencensus.ext.azure.log_exporter import AzureLogHandler
+    from opencensus.ext.azure.trace_exporter import AzureExporter
     from opencensus.ext.flask.flask_middleware import FlaskMiddleware
     MONITORING_AVAILABLE = True
 except ImportError:
@@ -33,7 +34,7 @@ if connection_string and MONITORING_AVAILABLE:
     # Add Flask middleware for automatic request tracking
     middleware = FlaskMiddleware(
         app,
-        exporter=None
+        exporter=AzureExporter(connection_string=connection_string)
     )
     
     # Configure logging to Azure
