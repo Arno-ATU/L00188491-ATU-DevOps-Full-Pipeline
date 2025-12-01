@@ -30,7 +30,7 @@ This project demonstrates a complete CI/CD pipeline for a Python Flask web appli
 | **Containerization** | Docker, Docker Compose | ✅ |
 | **Container Registry** | Docker Hub | ✅ |
 | **Cloud Deployment** | Azure App Service, Linux Containers | ✅ |
-| **Monitoring & Logging** | Azure Application Insights, custom events, alerts | ✅ |
+| **Monitoring & Logging** | Azure Application Insights, custom events, alerts | x |
 
 ---
 
