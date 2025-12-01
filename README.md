@@ -143,14 +143,10 @@ http://localhost:8000
 
 ### 6. Monitoring & Logging
 
-**Tool:** Azure Application Insights
+**Tool:** Github Actions
+ - Package Tags set up to show in this README to assist with monitoring
 
-**Telemetry Collected:**
-- HTTP request/response metrics
-- Application performance (response times)
-- Custom events (user actions, API calls)
-- Error tracking and exception logging
-- Resource utilization (CPU, memory)
+**Tool:** Azure Application Insights
 
 **Configured Alerts:**
 - High error rate (> 5 errors in 5 minutes)
@@ -159,46 +155,6 @@ http://localhost:8000
 
 **Notifications:** Email alerts to L00188491@atu.ie
 
----
-
-## Local Development Setup
-
-### Prerequisites
-- Python 3.11+
-- Docker & Docker Compose
-- Git
-
-### Quick Start
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/Arno-ATU/L00188491-ATU-DevOps-Full-Pipeline.git
-cd L00188491-ATU-DevOps-Full-Pipeline
-```
-
-2. **Run with Docker Compose**
-```bash
-docker-compose up
-```
-
-3. **Access the application**
-- Application: http://localhost:8000
-- Health check: http://localhost:8000/health
-
-### Running Tests
-
-```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Run tests
-pytest tests/
-
-# Run with coverage
-pytest tests/ --cov=app --cov-report=html
-```
-
----
 
 ## Security & Secret Management
 
