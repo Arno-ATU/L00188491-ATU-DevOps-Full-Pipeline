@@ -9,7 +9,7 @@ Arno Moelich - L00188491
 
 ---
 
-## Project Overview!!!!
+## Project Overview
 
 This project demonstrates a complete CI/CD pipeline for a Python Flask web application. The application itself is a simple quote generator with REST API endpoints, designed to generate user activity for monitoring and observability demonstrations.
 
